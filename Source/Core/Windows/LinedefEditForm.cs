@@ -211,6 +211,27 @@ namespace CodeImp.DoomBuilder.Windows
             // Set all options to the first linedef properties
             ////////////////////////////////////////////////////////////////////////
 
+            // 20120219 villsa - Disable checkboxes if multiple lines are selected...
+            // I am lazy, go away...
+            if (lines.Count > 1)
+            {
+                chkSwitchTextureLower.Enabled = false;
+                chkSwitchTextureMiddle.Enabled = false;
+                chkSwitchTextureUpper.Enabled = false;
+                chkSwitchDisplayLower.Enabled = false;
+                chkSwitchDisplayMiddle.Enabled = false;
+                chkSwitchDisplayUpper.Enabled = false;
+            }
+            else
+            {
+                chkSwitchTextureLower.Enabled = true;
+                chkSwitchTextureMiddle.Enabled = true;
+                chkSwitchTextureUpper.Enabled = true;
+                chkSwitchDisplayLower.Enabled = true;
+                chkSwitchDisplayMiddle.Enabled = true;
+                chkSwitchDisplayUpper.Enabled = true;
+            }
+
             // Get first line
             fl = General.GetByIndex(lines, 0);
 
