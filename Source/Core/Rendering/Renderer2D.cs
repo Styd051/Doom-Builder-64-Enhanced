@@ -16,24 +16,25 @@
 
 #region ================== Namespaces
 
+using CodeImp.DoomBuilder.Data;
+using CodeImp.DoomBuilder.Editing;
+using CodeImp.DoomBuilder.Geometry;
+using CodeImp.DoomBuilder.IO;
+using CodeImp.DoomBuilder.Map;
+using SlimDX;
+using SlimDX.Direct3D9;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
-using System.Drawing;
-using System.ComponentModel;
-using CodeImp.DoomBuilder.IO;
-using CodeImp.DoomBuilder.Map;
-using SlimDX.Direct3D9;
-using SlimDX;
-using CodeImp.DoomBuilder.Geometry;
-using System.Drawing.Imaging;
-using CodeImp.DoomBuilder.Data;
-using CodeImp.DoomBuilder.Editing;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using System.Windows.Forms;
 
 #endregion
 
@@ -54,7 +55,7 @@ namespace CodeImp.DoomBuilder.Rendering
         private const float THING_ARROW_SHRINK = 2f;
         private const float THING_CIRCLE_SIZE = 1f;
         private const float THING_CIRCLE_SHRINK = 0f;
-        private const int THING_BUFFER_STEP = 100;
+        private const int THING_BUFFER_SIZE = 100;
         private const float THINGS_BACK_ALPHA = 0.3f;
 
         private const string FONT_NAME = "Verdana";
@@ -100,7 +101,6 @@ namespace CodeImp.DoomBuilder.Rendering
 
         // Batch buffer for things rendering
         private VertexBuffer thingsvertices;
-        private int maxthings, numthings;
 
         // Render settings
         private bool thingsfront;
@@ -386,8 +386,6 @@ namespace CodeImp.DoomBuilder.Rendering
             // Trash things batch buffer
             if (thingsvertices != null) thingsvertices.Dispose();
             thingsvertices = null;
-            numthings = 0;
-            maxthings = 0;
             lastgridscale = -1f;
             lastgridsize = 0;
 
@@ -445,6 +443,7 @@ namespace CodeImp.DoomBuilder.Rendering
 
             // Create vertex buffers
             screenverts = new VertexBuffer(graphics.Device, 4 * sizeof(FlatVertex), Usage.Dynamic | Usage.WriteOnly, VertexFormat.None, Pool.Default);
+            thingsvertices = new VertexBuffer(graphics.Device, THING_BUFFER_SIZE * 12 * sizeof(FlatVertex), Usage.Dynamic | Usage.WriteOnly, VertexFormat.None, Pool.Default);
 
             // Make screen vertices
             stream = screenverts.Lock(0, 4 * sizeof(FlatVertex), LockFlags.Discard | LockFlags.NoSystemLock);
@@ -665,12 +664,6 @@ namespace CodeImp.DoomBuilder.Rendering
             // Rendertargets available?
             if (thingstex != null)
             {
-                // Always trash things batch buffer
-                if (thingsvertices != null) thingsvertices.Dispose();
-                thingsvertices = null;
-                numthings = 0;
-                maxthings = 0;
-
                 // Set the rendertarget to the things texture
                 targetsurface = thingstex.GetSurfaceLevel(0);
                 if (graphics.StartRendering(clear, General.Colors.Background.WithAlpha(0).ToColorValue(), targetsurface, null))
@@ -911,61 +904,6 @@ namespace CodeImp.DoomBuilder.Rendering
 
         #region ================== Things
 
-        // This ensures there is enough place in the things buffer
-        private void ReserveThingsMemory(int newnumthings, bool preserve)
-        {
-            int newmaxthings;
-            DataStream stream;
-            FlatVertex[] verts = null;
-
-            // Do we need to make changes?
-            if ((newnumthings > maxthings) || !preserve)
-            {
-                // Read old things data if we want to keep it
-                if (preserve && (thingsvertices != null) && (numthings > 0))
-                {
-                    stream = thingsvertices.Lock(0, numthings * 12 * FlatVertex.Stride, LockFlags.ReadOnly | LockFlags.NoSystemLock);
-                    verts = stream.ReadRange<FlatVertex>(numthings * 12);
-                    thingsvertices.Unlock();
-                    stream.Dispose();
-                }
-
-                // Buffer needs to be reallocated?
-                if (newnumthings > maxthings)
-                {
-                    // Calculate new size
-                    newmaxthings = newnumthings + THING_BUFFER_STEP;
-
-                    // Trash old buffer
-                    if (thingsvertices != null) thingsvertices.Dispose();
-
-                    // Create new buffer
-                    thingsvertices = new VertexBuffer(graphics.Device, newmaxthings * 12 * FlatVertex.Stride, Usage.None, VertexFormat.None, Pool.Managed);
-                    maxthings = newmaxthings;
-                }
-                else
-                {
-                    // Buffer stays the same
-                    newmaxthings = maxthings;
-                }
-
-                // Keep old things?
-                if (preserve && (verts != null))
-                {
-                    // Write old things into new buffer
-                    stream = thingsvertices.Lock(0, maxthings * 12 * FlatVertex.Stride, LockFlags.Discard | LockFlags.NoSystemLock);
-                    stream.WriteRange<FlatVertex>(verts);
-                    thingsvertices.Unlock();
-                    stream.Dispose();
-                }
-                else
-                {
-                    // Things were trashed
-                    numthings = 0;
-                }
-            }
-        }
-
         // This makes vertices for a thing
         // Returns false when not on the screen
         private bool CreateThingVerts(Thing t, ref FlatVertex[] verts, int offset, PixelColor c)
@@ -1066,12 +1004,13 @@ namespace CodeImp.DoomBuilder.Rendering
         }
 
         // This draws a set of things
-        private void RenderThingsBatch(int offset, int count, float alpha)
+        private void RenderThingsBatch(ICollection<Thing> things, float alpha, bool fixedcolor, PixelColor c)
         {
             int thingtextureindex = 0;
+            PixelColor tc;
 
             // Anything to render?
-            if (count > 0)
+            if (things.Count > 0)
             {
                 // Make alpha color
                 Color4 alphacolor = new Color4(alpha, 1.0f, 1.0f, 1.0f);
@@ -1095,78 +1034,81 @@ namespace CodeImp.DoomBuilder.Rendering
                 SetWorldTransformation(false);
                 graphics.Shaders.Things2D.SetSettings(alpha);
 
-                // Draw the things batched
+                // Begin drawing
                 graphics.Shaders.Things2D.Begin();
                 graphics.Shaders.Things2D.BeginPass(0);
-                graphics.Device.DrawPrimitives(PrimitiveType.TriangleList, offset * 12, count * 4);
+
+                // Lock buffer
+                int locksize = (things.Count > THING_BUFFER_SIZE) ? THING_BUFFER_SIZE : things.Count;
+                DataStream stream = thingsvertices.Lock(0, locksize * 12 * FlatVertex.Stride, LockFlags.Discard);
+                FlatVertex[] verts = new FlatVertex[THING_BUFFER_SIZE * 12];
+
+                // Go for all things
+                int buffercount = 0;
+                int totalcount = 0;
+                foreach (Thing t in things)
+                {
+                    // Create vertices
+                    tc = fixedcolor ? c : DetermineThingColor(t);
+                    if (CreateThingVerts(t, ref verts, buffercount * 12, tc))
+                             buffercount++;
+                    
+                    totalcount++;
+                    
+                    // Buffer filled?
+                    if (buffercount == locksize)
+                    {
+                        // Unlock buffer
+                        stream.WriteRange<FlatVertex>(verts, 0, buffercount * 12);
+                        thingsvertices.Unlock();
+                        stream.Dispose();
+                        stream = null;
+                        
+                        // Draw!
+                        graphics.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, buffercount * 4);
+                        buffercount = 0;
+                        
+                        // Do we need to continue drawing?
+                        if (totalcount < things.Count)
+                        {
+                            // Lock buffer
+                            locksize = ((things.Count - totalcount) > THING_BUFFER_SIZE) ? THING_BUFFER_SIZE : (things.Count - totalcount);
+                            stream = thingsvertices.Lock(0, locksize * 12 * FlatVertex.Stride, LockFlags.Discard);
+                        }
+                    }
+                }
+
+                // Draw what's still remaining
+                if (buffercount > 0)
+                {
+                    // Unlock buffer
+                    stream.WriteRange<FlatVertex>(verts, 0, buffercount * 12);
+                    thingsvertices.Unlock();
+                    stream.Dispose();
+                    stream = null;
+
+                    // Draw!
+                    graphics.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, buffercount * 4);
+                }
+
+                // Done
                 graphics.Shaders.Things2D.EndPass();
                 graphics.Shaders.Things2D.End();
             }
         }
-
-        // This adds a thing in the things buffer for rendering
-        public void RenderThing(Thing t, PixelColor c, float alpha)
-        {
-            FlatVertex[] verts = new FlatVertex[12];
-            DataStream stream;
-
-            // Create vertices
-            if (CreateThingVerts(t, ref verts, 0, c))
-            {
-                // Make sure there is enough memory reserved
-                ReserveThingsMemory(numthings + 1, true);
-
-                // Store vertices in buffer
-                if (thingsvertices != null)
-                {
-                    stream = thingsvertices.Lock(numthings * 12 * FlatVertex.Stride, 12 * FlatVertex.Stride, LockFlags.NoSystemLock);
-                    stream.WriteRange<FlatVertex>(verts);
-                    thingsvertices.Unlock();
-                    stream.Dispose();
-                }
-
-                // Thing added, render it
-                RenderThingsBatch(numthings, 1, alpha);
-                numthings++;
-            }
-        }
-
-        // This adds a thing in the things buffer for rendering
-        public void RenderThingSet(ICollection<Thing> things, float alpha)
-        {
-            // Anything to do?
-            if (things.Count > 0)
-            {
-                FlatVertex[] verts = new FlatVertex[things.Count * 12];
-
-                // Make sure there is enough memory reserved
-                ReserveThingsMemory(numthings + things.Count, true);
-
-                // Go for all things
-                int addcount = 0;
-                foreach (Thing t in things)
-                {
-                    // Create vertices
-                    if (CreateThingVerts(t, ref verts, addcount * 12, DetermineThingColor(t)))
-                    {
-                        // Next
-                        addcount++;
-                    }
-                }
-
-                // Store vertices in buffer
-                if (thingsvertices != null)
-                {
-                    DataStream stream = thingsvertices.Lock(numthings * 12 * FlatVertex.Stride, things.Count * 12 * FlatVertex.Stride, LockFlags.NoSystemLock);
-                    stream.WriteRange<FlatVertex>(verts);
-                    thingsvertices.Unlock();
-                    stream.Dispose();
-                }
-
-                // Things added, render them
-                RenderThingsBatch(numthings, addcount, alpha);
-                numthings += addcount;
-            }
+		
+		// This adds a thing in the things buffer for rendering
+		public void RenderThing(Thing t, PixelColor c, float alpha)
+		{
+			List<Thing> things = new List<Thing>(1);
+			things.Add(t);
+			RenderThingsBatch(things, alpha, true, c);
+		}
+		
+		// This adds a thing in the things buffer for rendering
+		public void RenderThingSet(ICollection<Thing> things, float alpha)
+		{
+			RenderThingsBatch(things, alpha, false, new PixelColor());
         }
 
         #endregion
