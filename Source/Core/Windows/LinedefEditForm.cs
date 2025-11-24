@@ -112,10 +112,11 @@ namespace CodeImp.DoomBuilder.Windows
             {
                 chkSwitchTextureLower.Checked = true;
 
-                if ((switchflags & 0x10000) == 0x10000)
-                    chkSwitchDisplayMiddle.Checked = true;
-                else if ((switchflags & 0x8000) == 0x8000)
+                // styd: Fixes a bug where, after checking the Middle and Lower boxes, and clicked OK, and returning to the Edit linedef menu, the Middle box is no longer checked, Only the Lower box is checked.
+                if ((switchflags & 0x8000) == 0x8000)
                     chkSwitchDisplayUpper.Checked = true;
+                else
+                    chkSwitchDisplayMiddle.Checked = true;
             }
             else if (mask == 0x6000)
             {
