@@ -93,6 +93,7 @@ namespace CodeImp.DoomBuilder.Config
         private bool toolbargeometry;
         private bool toolbartesting;
         private bool toolbarfile;
+        private float filteranisotropy;
         private bool showfps;
 
         // These are not stored in the configuration, only used at runtime
@@ -156,6 +157,7 @@ namespace CodeImp.DoomBuilder.Config
         public bool ToolbarGeometry { get { return toolbargeometry; } internal set { toolbargeometry = value; } }
         public bool ToolbarTesting { get { return toolbartesting; } internal set { toolbartesting = value; } }
         public bool ToolbarFile { get { return toolbarfile; } internal set { toolbarfile = value; } }
+        public float FilterAnisotropy { get { return filteranisotropy; } internal set { filteranisotropy = value; } }
         public bool ShowFPS { get { return showfps; } internal set { showfps = value; } }
 
         public string DefaultTexture { get { return defaulttexture; } set { defaulttexture = value; } }
@@ -236,6 +238,7 @@ namespace CodeImp.DoomBuilder.Config
                 toolbargeometry = cfg.ReadSetting("toolbargeometry", true);
                 toolbartesting = cfg.ReadSetting("toolbartesting", true);
                 toolbarfile = cfg.ReadSetting("toolbarfile", true);
+                filteranisotropy = cfg.ReadSetting("filteranisotropy", 8.0f);
                 showfps = cfg.ReadSetting("showfps", false);
 
                 // Success
@@ -298,6 +301,7 @@ namespace CodeImp.DoomBuilder.Config
             cfg.WriteSetting("toolbargeometry", toolbargeometry);
             cfg.WriteSetting("toolbartesting", toolbartesting);
             cfg.WriteSetting("toolbarfile", toolbarfile);
+            cfg.WriteSetting("filteranisotropy", filteranisotropy);
             cfg.WriteSetting("showfps", showfps);
 
             // Save settings configuration
