@@ -41,8 +41,15 @@
 #define Floor_RaiseCrush(tag)                           56:tag
 #define Floor_RaiseTwentyFour(tag)                      58:tag
 #define Floor_RaiseTwentyFourChange(tag)                59:tag
+#define Plat_RaiseByTwentyFourChange(tag)               66:tag
+#define Floor_RaiseTwentyFourChangeSlow(tag)            66:tag
+#define Plat_RaiseByThirtyTwoChange(tag)                67:tag
+#define Floor_RaiseThirtyTwoChangeSlow(tag)             67:tag
 #define Floor_RaiseToNearest(tag)                       119:tag
 #define Floor_RaiseToNearestTwo(tag)                    119:tag
+#define Plat_RaiseChange(tag)                           22:tag
+#define Floor_RaiseToNearestChangeSlow(tag)             22:tag
+#define Floor_RaiseToNearestChange(tag)                 22:tag
 #define Floor_MoveByValue(tag, value)                   PushVar(value); 212:tag
 #define Floor_MoveBy(tag, value)                        PushVar(value); 212:tag
 #define Floor_MoveByValueFast(tag, value)               PushVar(value); 228:tag
@@ -99,14 +106,11 @@
 //
 #define Plat_DownWaitUp(tag)                            10:tag
 #define Plat_DWU(tag)                                   10:tag
-#define Plat_RaiseChange(tag)                           22:tag
 #define Plat_PerpetualRaise(tag)                        53:tag
 #define Plat_Loop(tag)                                  53:tag
 #define Plat_DWULoop(tag)                               53:tag
 #define Plat_DownWaitUpLoop(tag)                        53:tag
 #define Plat_Stop(tag)                                  54:tag
-#define Plat_RaiseByTwentyFourChange(tag)               66:tag
-#define Plat_RaiseByThirtyTwoChange(tag)                67:tag
 #define Plat_DownWaitUpFast(tag)                        121:tag
 #define Plat_DWUFast(tag)                               121:tag
 #define Plat_UpWaitDown(tag)                            122:tag
@@ -118,17 +122,17 @@
 #define Plat_DownWaitUpBy(tag, value)                   PushVar(value); 236:tag
 #define Plat_DWUBy(tag, value)                          PushVar(value); 236:tag
 #define Plat_DownUpFastByValue(tag, value)              PushVar(value); 237:tag
-#define Plat_DownWaitUpFastByValue(tag, value)          PushVar(value); 237:tag
-#define Plat_DownWaitUpFastBy(tag, value)               PushVar(value); 237:tag
-#define Plat_DWUFastBy(tag, value)                      PushVar(value); 237:tag
+#define Plat_DownWaitUpByValueFast(tag, value)          PushVar(value); 237:tag
+#define Plat_DownWaitUpByFast(tag, value)               PushVar(value); 237:tag
+#define Plat_DWUByFast(tag, value)                      PushVar(value); 237:tag
 #define Plat_UpDownByValue(tag, value)                  PushVar(value); 238:tag
 #define Plat_UpWaitDownByValue(tag, value)              PushVar(value); 238:tag
 #define Plat_UpWaitDownBy(tag, value)                   PushVar(value); 238:tag
 #define Plat_UWDBy(tag, value)                          PushVar(value); 238:tag
 #define Plat_UpDownFastByValue(tag, value)              PushVar(value); 239:tag
-#define Plat_UpWaitDownFastByValue(tag, value)          PushVar(value); 239:tag
-#define Plat_UpWaitDownFastBy(tag, value)               PushVar(value); 239:tag
-#define Plat_UWDFastBy(tag, value)                      PushVar(value); 239:tag
+#define Plat_UpWaitDownByValueFast(tag, value)          PushVar(value); 239:tag
+#define Plat_UpWaitDownByFast(tag, value)               PushVar(value); 239:tag
+#define Plat_UWDByFast(tag, value)                      PushVar(value); 239:tag
 
 //
 // TELEPORT
