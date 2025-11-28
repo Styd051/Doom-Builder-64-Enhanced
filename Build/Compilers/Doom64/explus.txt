@@ -1,7 +1,7 @@
 //**************************************************************************
 //**
 //** explus.txt
-//** Line specials exclusive to the EX+ source port.
+//** Line specials exclusive to the EX+ and EX+ Enhanced source port.
 //**
 //**************************************************************************
 
