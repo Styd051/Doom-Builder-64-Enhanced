@@ -1,0 +1,47 @@
+Doom Builder 64 Enhanced
+based on code by CodeImp, boris_i, Kaiser
+=======================================================
+version 1.0.0.0
+=====================
+- Fixed a potential timing issue on speed-stepping CPUs. by codeimp
+- Better timing clock without accuracy loss after long system uptime (should solve camera movement lag issues) by codeimp
+- Added basic plugin loading order system (just a cfg file which sets the order in which to load the DLL files, this matters because that is also the order in which events are raised on plugins) by codeimp
+- Change the way Things are rendered in classic modes (now use a small, constant amount of video memory instead of linear amount) by codeimp
+- @ Fixed a bug in the new way the Things are rendered
+Removed code that crashed the script editor and I had no better solution (it was unused code anyway) by codeimp
+- Fixed crash when double-clicking a sector in Make Sector Mode by codeimp
+- Fixed crash when sectors with lots of sidedefs are created or loaded by codeimp
+- Fixed a rounding issue with thing angles that sometimes caused things to display odd angles by codeimp
+- Fixed bug in Things Filters which caused removed flag settings to be restored after DB restart. by codeimp
+- Fixed crash when saving with spaces at the beginning or end of a typed texture/flat name by codeimp
+- Fixed a tiny inaccuracy on a rare occasion in the sector triangulation code by codeimp
+- Improved texture filtering in Visual Mode. When filtering is Off, it interpolates the mipmaps to reduce the banding effect on walls/floors. With filtering On, it now uses anisotropic filtering up to level 8. (you can change the anisotropy level by editing the 'filteranisotropy' value in the program configuration) by codeimp
+- Fixed a crash when accepting Edit Selection mode changes with erroneous overlapping lines. by codeimp
+- Fixed bug which sometimes causes the drawing vertex to jump to (0, 0) while drawing geometry. by codeimp
+- Fixed bug in dockers panel system that allowed the panel to go bonkers when resized smaller than possible. by codeimp
+- Fixed a bug that caused a zero-length file to be created when a resource file was missing. by codeimp
+- Fixed an issue that caused a map to be 'changed' just by going into Visual Mode. by codeimp
+- @ Removed some console output code that was used for testing
+@ Gave the ThingTypeInfo a string representation (ToString) by codeimp
+- Find and Replace Mode: can now find things by their flags by boris_i
+- Find and Replace Mode: can now find linedefs by their flags by boris_i
+- Reorganize the order of the lindefs flags on the interface for the Doom 64 vanilla and EX+ configurations, and add the flag Block Player to the EX+ configuration since the EX+ engine supports this new feature. by Styd051
+- Added support for the EX+ Enhanced engine by Styd051
+- I changed the Doom Builder 64  background to my own custom  background that I made myself, It can always be improved in the future. by Styd051
+- Added a new visual feature for things in Nightmare Mode, when you place the Nightmare flag on an things, it will automatically change color to green, this allows you to differentiate between things in Nightmare mode and things that are not in Nightmare mode on the map. by Styd051
+- renames the name Doom Builder 64 to Doom Builder 64 Enhanced by styd051
+- Fixes a bug in the switch setup where when you select multiple lindefs at once and click OK, all the lindefs you have selected will have the Upper, Middle or Lower options of the switch setup applied to all lindefs. by Styd051
+- Fixes a bug where, after checking the Middle and Lower boxes, and clicked OK, and returning to the Edit linedef menu, the Middle box is no longer checked, Only the Lower box is checked. by Styd051
+- Change the icon of .exe of Doom Builder 64 Very sexy icon! by Styd051
+- Replaces the Cacodemon sprite icon from Doom Classic with the Cacodemon sprite from Doom 64, and replaces the Builder16 icon with an icon with the three demonic artifacts. by Styd051
+- Added a new DB64Resource.wad file that improves the visual appearance of the Zombie Shotgun, Imp Nightmare, Spectre, Baron of Hell, Red Marine Bot, and Cyan Marine Bot in visual mode on Doom Builder 64, They now use their own sprites with their own colors instead of using the same sprite with a different frame in visual mode, resulting in a visual improvement for mappers, and corrects and renames the name Player Bot Blue to Player Bot Cyan because the marine bot was not blue, but cyan in the game by Styd051
+- Restores the Artifact Switch actions in the macro commands that were deleted, and adds the Artifact Switch scripts and all the scripts located in explus.txt to Doom64_BLAM.cfg by Styd051
+- The Teleport_Monsters_Only and Start_Light_Strobing actions now support macro commands, and these new macro commands are added to Doom64_BLAM.cfg. by Styd051
+- Added Dropoff flags to the EX+ Enhanced and EX+ configurations because these engines support it, this flag This allows jumps from high places for things. by Styd051
+-Added support for Diema's dma-bsp64 nodebuilder by Diema
+- Add Missing Actions
+This adds the missing actions which reference the Global Integer, and fixes some language. Reference: https://www.doom64.com/maps/actions/list.html by Immorpher
+- Add the Static Marine
+The static marine results from an underflow and is mostly a decorative thing: https://www.doom64.com/maps/things/list.html by Immorpher
+- Switch Setup Correction
+There has been a long misconception on how Doom 64 switch flags work. For example "Switch Check Height" is not in Doom 64. This corrects for that and simplifies the switch setup based on how the flags actually work here: https://www.doom64.com/maps/linedefs.html by Immorpher
