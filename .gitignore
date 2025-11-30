@@ -4,6 +4,7 @@ Source/Plugins/BuilderModes/obj
 Source/Plugins/Statistics/obj
 Source/Plugins/CopyPasteSectorProps/obj
 Source/Plugins/ImageDrawingExample/obj
+Source/Plugins/CommentsPanel/obj
 *.zip
 Build/*.exe
 Build/*.pdb
