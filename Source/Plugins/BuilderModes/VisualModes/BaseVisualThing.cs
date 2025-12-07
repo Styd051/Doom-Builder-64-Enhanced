@@ -77,7 +77,15 @@ namespace CodeImp.DoomBuilder.BuilderModes
         {
             this.mode = mode;
 
-            Rebuild();
+            // Find thing information
+            info = General.Map.Data.GetThingInfo(Thing.Type);
+            
+            // Find sprite texture
+            if (info.Sprite.Length > 0)
+            {
+                sprite = General.Map.Data.GetSpriteImage(info.Sprite);
+                if (sprite != null) sprite.AddReference();
+            }
 
             // We have no destructor
             GC.SuppressFinalize(this);
@@ -266,16 +274,6 @@ namespace CodeImp.DoomBuilder.BuilderModes
         // This forces to rebuild the whole thing
         public void Rebuild()
         {
-            // Find thing information
-            info = General.Map.Data.GetThingInfo(Thing.Type);
-
-            // Find sprite texture
-            if (info.Sprite.Length > 0)
-            {
-                sprite = General.Map.Data.GetSpriteImage(info.Sprite);
-                if (sprite != null) sprite.AddReference();
-            }
-
             // Setup visual thing
             Setup();
         }
