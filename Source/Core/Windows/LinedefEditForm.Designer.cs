@@ -605,7 +605,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.chkSwitchTextureLower.TabIndex = 26;
             this.chkSwitchTextureLower.Text = "Lower";
             this.chkSwitchTextureLower.UseVisualStyleBackColor = true;
-            this.chkSwitchTextureLower.CheckedChanged += new System.EventHandler(this.chkSwitchTextureLower_CheckedChanged_1);
+            this.chkSwitchTextureLower.Click += new System.EventHandler(this.chkSwitchTextureLower_CheckedChanged_1);
             // 
             // chkSwitchDisplayLower
             // 
@@ -617,7 +617,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.chkSwitchDisplayLower.TabIndex = 25;
             this.chkSwitchDisplayLower.Text = "Lower";
             this.chkSwitchDisplayLower.UseVisualStyleBackColor = true;
-            this.chkSwitchDisplayLower.CheckedChanged += new System.EventHandler(this.chkSwitchDisplayLower_CheckedChanged_1);
+            this.chkSwitchDisplayLower.Click += new System.EventHandler(this.chkSwitchDisplayLower_CheckedChanged_1);
             // 
             // chkSwitchTextureMiddle
             // 
@@ -629,7 +629,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.chkSwitchTextureMiddle.TabIndex = 24;
             this.chkSwitchTextureMiddle.Text = "Middle";
             this.chkSwitchTextureMiddle.UseVisualStyleBackColor = true;
-            this.chkSwitchTextureMiddle.CheckedChanged += new System.EventHandler(this.chkSwitchTextureMiddle_CheckedChanged_1);
+            this.chkSwitchTextureMiddle.Click += new System.EventHandler(this.chkSwitchTextureMiddle_CheckedChanged_1);
             // 
             // chkSwitchDisplayMiddle
             // 
@@ -641,7 +641,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.chkSwitchDisplayMiddle.TabIndex = 23;
             this.chkSwitchDisplayMiddle.Text = "Middle";
             this.chkSwitchDisplayMiddle.UseVisualStyleBackColor = true;
-            this.chkSwitchDisplayMiddle.CheckedChanged += new System.EventHandler(this.chkSwitchDisplayMiddle_CheckedChanged_1);
+            this.chkSwitchDisplayMiddle.Click += new System.EventHandler(this.chkSwitchDisplayMiddle_CheckedChanged_1);
             // 
             // chkSwitchTextureUpper
             // 
@@ -653,7 +653,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.chkSwitchTextureUpper.TabIndex = 22;
             this.chkSwitchTextureUpper.Text = "Upper";
             this.chkSwitchTextureUpper.UseVisualStyleBackColor = true;
-            this.chkSwitchTextureUpper.CheckedChanged += new System.EventHandler(this.chkSwitchTextureUpper_CheckedChanged_1);
+            this.chkSwitchTextureUpper.Click += new System.EventHandler(this.chkSwitchTextureUpper_CheckedChanged_1);
             // 
             // chkSwitchDisplayUpper
             // 
@@ -665,7 +665,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.chkSwitchDisplayUpper.TabIndex = 21;
             this.chkSwitchDisplayUpper.Text = "Upper";
             this.chkSwitchDisplayUpper.UseVisualStyleBackColor = true;
-            this.chkSwitchDisplayUpper.CheckedChanged += new System.EventHandler(this.chkSwitchDisplayUpper_CheckedChanged_1);
+            this.chkSwitchDisplayUpper.Click += new System.EventHandler(this.chkSwitchDisplayUpper_CheckedChanged_1);
             // 
             // activationtype
             // 
