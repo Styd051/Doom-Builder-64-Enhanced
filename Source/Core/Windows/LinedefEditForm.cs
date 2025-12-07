@@ -589,79 +589,55 @@ namespace CodeImp.DoomBuilder.Windows
 
         private void chkSwitchDisplayUpper_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (this.chkSwitchDisplayUpper.Checked)
+            if (this.chkSwitchDisplayUpper.CheckState == CheckState.Checked)
             {
-				if (lines.Count > 1)
-					{
-						return;
-					}
-                this.chkSwitchDisplayLower.Checked = false;
-                this.chkSwitchDisplayMiddle.Checked = false;
+                this.chkSwitchDisplayLower.CheckState = CheckState.Unchecked;
+                this.chkSwitchDisplayMiddle.CheckState = CheckState.Unchecked;
             }
         }
 
         private void chkSwitchDisplayMiddle_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (this.chkSwitchDisplayMiddle.Checked)
+            if (this.chkSwitchDisplayMiddle.CheckState == CheckState.Checked)
             {
-				if (lines.Count > 1)
-					{
-						return;
-					}
-                this.chkSwitchDisplayLower.Checked = false;
-                this.chkSwitchDisplayUpper.Checked = false;
+                this.chkSwitchDisplayLower.CheckState = CheckState.Unchecked;
+                this.chkSwitchDisplayUpper.CheckState = CheckState.Unchecked;
             }
         }
 
         private void chkSwitchDisplayLower_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (this.chkSwitchDisplayLower.Checked)
+            if (this.chkSwitchDisplayLower.CheckState == CheckState.Checked)
             {
-				if (lines.Count > 1)
-					{
-						return;
-					}
-                this.chkSwitchDisplayUpper.Checked = false;
-                this.chkSwitchDisplayMiddle.Checked = false;
+                this.chkSwitchDisplayUpper.CheckState = CheckState.Unchecked;
+                this.chkSwitchDisplayMiddle.CheckState = CheckState.Unchecked;
             }
         }
 
         private void chkSwitchTextureUpper_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (this.chkSwitchTextureUpper.Checked)
+            if (this.chkSwitchTextureUpper.CheckState == CheckState.Checked)
             {
-				if (lines.Count > 1)
-					{
-						return;
-					}
-                this.chkSwitchTextureLower.Checked = false;
-                this.chkSwitchTextureMiddle.Checked = false;
+                this.chkSwitchTextureLower.CheckState = CheckState.Unchecked;
+                this.chkSwitchTextureMiddle.CheckState = CheckState.Unchecked;
             }
         }
 
         private void chkSwitchTextureMiddle_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (this.chkSwitchTextureMiddle.Checked)
+            if (this.chkSwitchTextureMiddle.CheckState == CheckState.Checked)
             {
-				if (lines.Count > 1)
-					{
-						return;
-					}
-                this.chkSwitchTextureLower.Checked = false;
-                this.chkSwitchTextureUpper.Checked = false;
+                this.chkSwitchTextureLower.CheckState = CheckState.Unchecked;
+                this.chkSwitchTextureUpper.CheckState = CheckState.Unchecked;
             }
         }
 
         private void chkSwitchTextureLower_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (this.chkSwitchTextureLower.Checked)
+            if (this.chkSwitchTextureLower.CheckState == CheckState.Checked)
             {
-				if (lines.Count > 1)
-					{
-						return;
-					}
-                this.chkSwitchTextureUpper.Checked = false;
-                this.chkSwitchTextureMiddle.Checked = false;
+                this.chkSwitchTextureUpper.CheckState = CheckState.Unchecked;
+                this.chkSwitchTextureMiddle.CheckState = CheckState.Unchecked;
             }
         }
     }
