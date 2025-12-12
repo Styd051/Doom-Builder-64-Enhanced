@@ -336,7 +336,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.flags.Location = new System.Drawing.Point(22, 32);
             this.flags.Margin = new System.Windows.Forms.Padding(5);
             this.flags.Name = "flags";
-            this.flags.Size = new System.Drawing.Size(594, 226);
+            this.flags.Size = new System.Drawing.Size(604, 226);
             this.flags.TabIndex = 0;
             // 
             // linedefproperties
