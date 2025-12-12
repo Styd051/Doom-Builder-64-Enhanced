@@ -144,6 +144,9 @@ namespace CodeImp.DoomBuilder.Windows
             this.tabpasting = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
             this.pasteoptions = new CodeImp.DoomBuilder.Controls.PasteOptionsControl();
+            this.tabswitchsetupoptions = new System.Windows.Forms.TabPage(); // styd
+            this.switchsetupgroupBox1 = new System.Windows.Forms.GroupBox(); // styd
+            this.switchsetupselectmultiplelinedefs = new System.Windows.Forms.CheckBox(); // styd
             label7 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
@@ -173,6 +176,8 @@ namespace CodeImp.DoomBuilder.Windows
             this.colorsgroup3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabpasting.SuspendLayout();
+            this.tabswitchsetupoptions.SuspendLayout(); // styd
+            this.switchsetupgroupBox1.SuspendLayout(); // styd
             this.SuspendLayout();
             // 
             // label7
@@ -686,6 +691,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.tabs.Controls.Add(this.tabkeys);
             this.tabs.Controls.Add(this.tabcolors);
             this.tabs.Controls.Add(this.tabpasting);
+            this.tabs.Controls.Add(this.tabswitchsetupoptions); // styd
             this.tabs.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabs.ItemSize = new System.Drawing.Size(110, 19);
             this.tabs.Location = new System.Drawing.Point(14, 16);
@@ -1652,6 +1658,38 @@ namespace CodeImp.DoomBuilder.Windows
             this.pasteoptions.Name = "pasteoptions";
             this.pasteoptions.Size = new System.Drawing.Size(832, 534);
             this.pasteoptions.TabIndex = 0;
+            // styd
+            // tabswitchsetupoptions 
+            // 
+            this.tabswitchsetupoptions.Controls.Add(this.switchsetupgroupBox1);
+            this.tabswitchsetupoptions.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabswitchsetupoptions.Location = new System.Drawing.Point(4, 23);
+            this.tabswitchsetupoptions.Name = "tabswitchsetupoptions";
+            this.tabswitchsetupoptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabswitchsetupoptions.Size = new System.Drawing.Size(854, 617);
+            this.tabswitchsetupoptions.TabIndex = 0;
+            this.tabswitchsetupoptions.Text = "Switch Setup";
+            this.tabswitchsetupoptions.UseVisualStyleBackColor = true;
+            // styd
+            // switchsetupgroupBox1
+            // 
+            this.switchsetupgroupBox1.Controls.Add(this.switchsetupselectmultiplelinedefs);
+            this.switchsetupgroupBox1.Location = new System.Drawing.Point(6, 6);
+            this.switchsetupgroupBox1.Name = "switchsetupgroupBox1";
+            this.switchsetupgroupBox1.Size = new System.Drawing.Size(436, 78);
+            this.switchsetupgroupBox1.TabIndex = 18;
+            this.switchsetupgroupBox1.TabStop = false;
+            this.switchsetupgroupBox1.Text = " Options ";
+            // styd
+            // switchsetupselectmultiplelinedefs
+            // 
+            this.switchsetupselectmultiplelinedefs.AutoSize = true;
+            this.switchsetupselectmultiplelinedefs.Location = new System.Drawing.Point(23, 33);
+            this.switchsetupselectmultiplelinedefs.Name = "switchsetupselectmultiplelinedefs";
+            this.switchsetupselectmultiplelinedefs.Size = new System.Drawing.Size(256, 18);
+            this.switchsetupselectmultiplelinedefs.TabIndex = 1;
+            this.switchsetupselectmultiplelinedefs.Text = "Enable selection of multiple linedefs for Switch Setup (WIP)";
+            this.switchsetupselectmultiplelinedefs.UseVisualStyleBackColor = true;
             // 
             // PreferencesForm
             // 
@@ -1707,6 +1745,9 @@ namespace CodeImp.DoomBuilder.Windows
             this.colorsgroup3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tabpasting.ResumeLayout(false);
+            this.tabswitchsetupoptions.ResumeLayout(false); // styd
+            this.switchsetupgroupBox1.ResumeLayout(false); // styd
+            this.switchsetupgroupBox1.PerformLayout(); // styd
             this.ResumeLayout(false);
 
         }
@@ -1823,5 +1864,8 @@ namespace CodeImp.DoomBuilder.Windows
         private CodeImp.DoomBuilder.Controls.ColorControl colorMblock;
         private CodeImp.DoomBuilder.Controls.ColorControl coloinvisiblelinedef;
         private System.Windows.Forms.CheckBox cbShowFPS;
+        private System.Windows.Forms.TabPage tabswitchsetupoptions; // styd
+        private System.Windows.Forms.GroupBox switchsetupgroupBox1; // styd
+        private System.Windows.Forms.CheckBox switchsetupselectmultiplelinedefs; // styd
     }
 }

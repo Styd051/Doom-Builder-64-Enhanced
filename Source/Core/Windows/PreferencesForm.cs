@@ -95,6 +95,7 @@ namespace CodeImp.DoomBuilder.Windows
             toolbar_geometry.Checked = General.Settings.ToolbarGeometry;
             toolbar_testing.Checked = General.Settings.ToolbarTesting;
             cbShowFPS.Checked = General.Settings.ShowFPS;
+            switchsetupselectmultiplelinedefs.Checked = General.Settings.SwitchSetupSelectMultipleLinedefs; // styd
 
             // Fill fonts list
             scriptfontname.BeginUpdate();
@@ -223,6 +224,7 @@ namespace CodeImp.DoomBuilder.Windows
             General.Settings.ToolbarGeometry = toolbar_geometry.Checked;
             General.Settings.ToolbarTesting = toolbar_testing.Checked;
             General.Settings.ShowFPS = cbShowFPS.Checked;
+            General.Settings.SwitchSetupSelectMultipleLinedefs = switchsetupselectmultiplelinedefs.Checked; // styd
 
             // Script font size
             int fontsize = 8;

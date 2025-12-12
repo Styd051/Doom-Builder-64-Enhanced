@@ -95,6 +95,7 @@ namespace CodeImp.DoomBuilder.Config
         private bool toolbarfile;
         private float filteranisotropy;
         private bool showfps;
+        private bool switchsetupselectmultiplelinedefs; // styd
 
         // These are not stored in the configuration, only used at runtime
         private string defaulttexture;
@@ -159,6 +160,7 @@ namespace CodeImp.DoomBuilder.Config
         public bool ToolbarFile { get { return toolbarfile; } internal set { toolbarfile = value; } }
         public float FilterAnisotropy { get { return filteranisotropy; } internal set { filteranisotropy = value; } }
         public bool ShowFPS { get { return showfps; } internal set { showfps = value; } }
+        public bool SwitchSetupSelectMultipleLinedefs { get { return switchsetupselectmultiplelinedefs; } internal set { switchsetupselectmultiplelinedefs = value; } } // styd
 
         public string DefaultTexture { get { return defaulttexture; } set { defaulttexture = value; } }
         public string DefaultFloorTexture { get { return defaultfloortexture; } set { defaultfloortexture = value; } }
@@ -240,6 +242,7 @@ namespace CodeImp.DoomBuilder.Config
                 toolbarfile = cfg.ReadSetting("toolbarfile", true);
                 filteranisotropy = cfg.ReadSetting("filteranisotropy", 8.0f);
                 showfps = cfg.ReadSetting("showfps", false);
+                switchsetupselectmultiplelinedefs = cfg.ReadSetting("switchsetupselectmultiplelinedefs", false); // styd
 
                 // Success
                 return true;
@@ -303,6 +306,7 @@ namespace CodeImp.DoomBuilder.Config
             cfg.WriteSetting("toolbarfile", toolbarfile);
             cfg.WriteSetting("filteranisotropy", filteranisotropy);
             cfg.WriteSetting("showfps", showfps);
+            cfg.WriteSetting("switchsetupselectmultiplelinedefs", switchsetupselectmultiplelinedefs); // styd
 
             // Save settings configuration
             General.WriteLogLine("Saving program configuration...");
