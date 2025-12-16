@@ -99,7 +99,7 @@ namespace CodeImp.DoomBuilder.Windows
                 if (ft.Flags.ContainsKey(c.Tag.ToString())) c.Checked = ft.Flags[c.Tag.ToString()];
 
             // Coordination
-            angle.Text = Angle2D.RealToDoom(ft.Angle).ToString();
+            angle.Text = ft.AngleDoom.ToString();
             height.Text = ((int)ft.Position.z).ToString();
 
             // Tag
@@ -131,8 +131,7 @@ namespace CodeImp.DoomBuilder.Windows
                 }
 
                 // Coordination
-                int angledeg = Angle2D.RealToDoom(t.Angle);
-                if (angledeg.ToString() != angle.Text) angle.Text = "";
+                if (t.AngleDoom.ToString() != angle.Text) angle.Text = "";
                 if (((int)t.Position.z).ToString() != height.Text) height.Text = "";
 
                 // Tag
@@ -229,7 +228,7 @@ namespace CodeImp.DoomBuilder.Windows
                 t.Type = General.Clamp(thingtype.GetResult(t.Type), General.Map.FormatInterface.MinThingType, General.Map.FormatInterface.MaxThingType);
 
                 // Coordination
-                t.Rotate(Angle2D.DoomToReal(angle.GetResult(Angle2D.RealToDoom(t.Angle))));
+                t.Rotate(angle.GetResult(t.AngleDoom));
                 t.Move(t.Position.x, t.Position.y, (float)height.GetResult((int)t.Position.z));
 
                 // Apply all flags

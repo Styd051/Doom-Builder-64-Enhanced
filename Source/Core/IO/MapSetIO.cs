@@ -83,6 +83,8 @@ namespace CodeImp.DoomBuilder.IO
         public abstract int MinThingType { get; }
         public abstract double MaxCoordinate { get; }
         public abstract double MinCoordinate { get; }
+        public abstract int MaxThingAngle { get; }
+		public abstract int MinThingAngle { get; }
         public abstract bool InDoom64Mode { get; }  // villsa
         public abstract bool InDoom64N64Mode { get; }
         public abstract bool IsConvertor { get; }
