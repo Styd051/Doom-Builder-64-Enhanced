@@ -104,11 +104,17 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 if (l != null)
                 {
                     association[0].Set(new Vector2D((l.Start.Position + l.End.Position) / 2), l.Tag, UniversalType.SectorTag);
-                    if (General.Map.FormatInterface.InDoom64Mode)    // villsa
-                        association[1].Set(new Vector2D((l.Start.Position + l.End.Position) / 2), l.Tag, UniversalType.ThingTag);
                 }
                 else
                     association[0].Set(new Vector2D(), 0, 0);
+
+                // villsa / styd Fixes a bug where, when you place the mouse cursor over the linedef and then remove the mouse cursor from the linedef, the things marked with the corresponding tags remained bright.
+                if (l != null)
+                {
+                    association[1].Set(new Vector2D((l.Start.Position + l.End.Position) / 2), l.Tag, UniversalType.ThingTag);
+                }
+                else
+                    association[1].Set(new Vector2D(), 0, 0);
             }
             else
             {
