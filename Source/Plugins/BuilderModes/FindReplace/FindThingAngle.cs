@@ -1,4 +1,4 @@
-﻿
+
 #region ================== Copyright (c) 2007 Pascal vd Heiden
 
 /*
@@ -37,8 +37,8 @@ using CodeImp.DoomBuilder.Config;
 
 namespace CodeImp.DoomBuilder.BuilderModes
 {
-	[FindReplace("Thing Flags", BrowseButton = true, Replacable = false)]
-	internal class FindThingFlag : FindReplaceType
+	[FindReplace("Thing Angle", BrowseButton = true)]
+	internal class FindThingAngle : FindReplaceType
 	{
 		#region ================== Constants
 
@@ -51,21 +51,21 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		#region ================== Properties
 
 		public override Presentation RenderPresentation { get { return Presentation.Things; } }
-		public override Image BrowseImage { get { return Properties.Resources.List; } }
-
+		public override Image BrowseImage { get { return Properties.Resources.Angle; } }
+		
 		#endregion
 
 		#region ================== Constructor / Destructor
 
 		// Constructor
-		public FindThingFlag()
+		public FindThingAngle()
 		{
 			// Initialize
 
 		}
 
 		// Destructor
-		~FindThingFlag()
+		~FindThingAngle()
 		{
 		}
 
@@ -76,7 +76,9 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		// This is called when the browse button is pressed
 		public override string Browse(string initialvalue)
 		{
-			return FlagsForm.ShowDialog(Form.ActiveForm, initialvalue, General.Map.Config.ThingFlags);
+			int initangle;
+			int.TryParse(initialvalue, out initangle);
+			return AngleForm.ShowDialog(Form.ActiveForm, initangle).ToString();
 		}
 
 
@@ -87,33 +89,39 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		{
 			List<FindReplaceObject> objs = new List<FindReplaceObject>();
 
-			// Where to search?
-			ICollection<Thing> list = withinselection ? General.Map.Map.GetSelectedThings(true) : General.Map.Map.Things;
-
-			// Go for all things
-			foreach (Thing t in list)
+			// Interpret the replacement
+			int replaceangle = 0;
+			if(replacewith != null)
 			{
-				bool match = true;
-
-				// Parse the value string...
-				foreach (string s in value.Split(','))
+				// If it cannot be interpreted, set replacewith to null (not replacing at all)
+				if(!int.TryParse(replacewith, out replaceangle)) replacewith = null;
+				if(replacewith == null)
 				{
-					string str = s.Trim();
-
-					// ... and check if the flags don't match
-					if (General.Map.Config.ThingFlags.ContainsKey(str) && !t.IsFlagSet(str))
-					{
-						match = false;
-						break;
-					}
+					MessageBox.Show("Invalid replace value for this search type!", "Find and Replace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return objs.ToArray();
 				}
+			}
 
-				// Match?
-				if (match)
+			// Interpret the number given
+			int angle = 0;
+			if(int.TryParse(value, out angle))
+			{
+				// Where to search?
+				ICollection<Thing> list = withinselection ? General.Map.Map.GetSelectedThings(true) : General.Map.Map.Things;
+
+				// Go for all things
+				foreach(Thing t in list)
 				{
-					// Add to list
-					ThingTypeInfo ti = General.Map.Data.GetThingInfo(t.Type);
-					objs.Add(new FindReplaceObject(t, "Thing " + t.Index + " (" + ti.Title + ")"));
+					// Match?
+					if(Angle2D.RealToDoom(t.Angle) == angle)
+					{
+						// Replace
+						if(replacewith != null) t.Rotate(Angle2D.DoomToReal(replaceangle));
+
+						// Add to list
+						ThingTypeInfo ti = General.Map.Data.GetThingInfo(t.Type);
+						objs.Add(new FindReplaceObject(t, "Thing " + t.Index + " (" + ti.Title + ")"));
+					}
 				}
 			}
 
@@ -123,7 +131,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		// This is called when a specific object is selected from the list
 		public override void ObjectSelected(FindReplaceObject[] selection)
 		{
-			if (selection.Length == 1)
+			if(selection.Length == 1)
 			{
 				ZoomToSelection(selection);
 				General.Interface.ShowThingInfo(selection[0].Thing);
@@ -132,13 +140,13 @@ namespace CodeImp.DoomBuilder.BuilderModes
 				General.Interface.HideInfo();
 
 			General.Map.Map.ClearAllSelected();
-			foreach (FindReplaceObject obj in selection) obj.Thing.Selected = true;
+			foreach(FindReplaceObject obj in selection) obj.Thing.Selected = true;
 		}
 
 		// Render selection
 		public override void RenderThingsSelection(IRenderer2D renderer, FindReplaceObject[] selection)
 		{
-			foreach (FindReplaceObject o in selection)
+			foreach(FindReplaceObject o in selection)
 			{
 				renderer.RenderThing(o.Thing, General.Colors.Selection, 1.0f);
 			}
@@ -148,7 +156,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		public override void EditObjects(FindReplaceObject[] selection)
 		{
 			List<Thing> things = new List<Thing>(selection.Length);
-			foreach (FindReplaceObject o in selection) things.Add(o.Thing);
+			foreach(FindReplaceObject o in selection) things.Add(o.Thing);
 			General.Interface.ShowEditThings(things);
 		}
 

@@ -56,6 +56,13 @@ namespace CodeImp.DoomBuilder.Controls
         // Variables
         private string elementname;
         private string lasteditfieldname;
+        private bool autoinsertuserprefix;
+		
+		#endregion
+
+		#region ================== Properties
+		
+		public bool AutoInsertUserPrefix { get { return autoinsertuserprefix; } set { autoinsertuserprefix = value; } }
 
         #endregion
 
@@ -65,6 +72,7 @@ namespace CodeImp.DoomBuilder.Controls
         public FieldsEditorControl()
         {
             InitializeComponent();
+            autoinsertuserprefix = true;
             enumscombo.Location = new Point(-1000, 1);
         }
 
@@ -105,6 +113,23 @@ namespace CodeImp.DoomBuilder.Controls
 
             // Sort fields
             Sort();
+
+            // Update new row
+            SetupNewRowStyle();
+        }
+		
+		// Use this in case you don't want the fixed fields
+		public void ListNoFixedFields()
+		{
+			// Update new row
+			SetupNewRowStyle();
+		}
+		
+		// Clear all fields
+		public void ClearFields()
+		{
+			// Trash rows
+			fieldslist.Rows.Clear();
 
             // Update new row
             SetupNewRowStyle();
@@ -368,7 +393,10 @@ namespace CodeImp.DoomBuilder.Controls
                 {
                     // Remove all text
                     fieldslist.Rows[e.RowIndex].Cells[0].Style.ForeColor = SystemColors.WindowText;
-                    fieldslist.Rows[e.RowIndex].Cells[0].Value = FIELD_PREFIX_SUGGESTION;
+                    if (autoinsertuserprefix)
+                        fieldslist.Rows[e.RowIndex].Cells[0].Value = FIELD_PREFIX_SUGGESTION;
+                    else
+                        fieldslist.Rows[e.RowIndex].Cells[0].Value = "";
                 }
             }
             // Value cell?
