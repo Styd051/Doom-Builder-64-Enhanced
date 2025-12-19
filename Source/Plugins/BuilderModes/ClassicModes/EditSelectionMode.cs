@@ -1146,6 +1146,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 // Update cached values
                 General.Map.Data.UpdateUsedTextures();
                 General.Map.Map.Update();
+                General.Map.ThingsFilter.Update();
 
                 // Make normal selection
                 General.Map.Map.ClearAllSelected();

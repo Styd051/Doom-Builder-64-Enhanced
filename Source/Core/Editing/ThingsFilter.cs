@@ -322,7 +322,11 @@ namespace CodeImp.DoomBuilder.Editing
                     {
                         if (t.Flags.ContainsKey(s))
                         {
-                            qualifies = (t.Flags[s] == true);
+                            if (t.Flags[s] == false)
+                            {
+                                qualifies = false;
+                                break;
+                            }
                         }
                         else
                         {
@@ -339,7 +343,13 @@ namespace CodeImp.DoomBuilder.Editing
                     foreach (string s in forbiddenfields)
                     {
                         if (t.Flags.ContainsKey(s))
-                            qualifies = (t.Flags[s] == false);
+                        {
+                            if (t.Flags[s] == true)
+                            {
+                                qualifies = false;
+                                break;
+                            }
+                        }
                     }
                 }
                 
@@ -351,7 +361,11 @@ namespace CodeImp.DoomBuilder.Editing
                     {
                         if (t.Fields.ContainsKey(kv.Key))
                         {
-                            qualifies = (t.Fields[kv.Key].Type == kv.Value.Type) && (t.Fields[kv.Key].Value.Equals(kv.Value.Value));
+                            if (!((t.Fields[kv.Key].Type == kv.Value.Type) && (t.Fields[kv.Key].Value.Equals(kv.Value.Value))))
+                            {
+                                qualifies = false;
+                                break;
+                            }
                         }
                         else
                         {
