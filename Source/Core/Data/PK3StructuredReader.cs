@@ -16,15 +16,16 @@
 
 #region ================== Namespaces
 
+using CodeImp.DoomBuilder.IO;
+using SlimDX.Direct3D9;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
-using CodeImp.DoomBuilder.IO;
+using System.Text;
 
 #endregion
 
@@ -265,6 +266,7 @@ namespace CodeImp.DoomBuilder.Data
         {
             Dictionary<long, ImageData> images = new Dictionary<long, ImageData>();
             ICollection<ImageData> collection;
+            List<ImageData> imgset = new List<ImageData>();
 
             // Error when suspended
             if (issuspended) throw new Exception("Data reader is suspended");
@@ -291,6 +293,19 @@ namespace CodeImp.DoomBuilder.Data
             // Add images to the container-specific texture set
             foreach (ImageData img in images.Values)
                 textureset.AddFlat(img);
+
+            // Load TEXTURES lump file
+            imgset.Clear();
+            string[] alltexturefiles = GetAllFilesWithTitle("", "TEXTURES", false);
+            foreach (string texturesfile in alltexturefiles)
+            {
+                MemoryStream filedata = LoadFile(texturesfile);
+                WADReader.LoadHighresFlats(filedata, texturesfile, ref imgset, null, images);
+                filedata.Dispose();
+            }
+            
+            // Add images from TEXTURES lump file
+            AddImagesToList(images, imgset);
 
             return new List<ImageData>(images.Values);
         }
