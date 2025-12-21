@@ -16,23 +16,22 @@
 
 #region ================== Namespaces
 
-using CodeImp.DoomBuilder.Config;
-using CodeImp.DoomBuilder.IO;
-using CodeImp.DoomBuilder.Map;
-using CodeImp.DoomBuilder.Windows;
-using CodeImp.DoomBuilder.ZDoom;
-using SlimDX.Direct3D9;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
-using System.Text;
-using System.Threading;
+using CodeImp.DoomBuilder.IO;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
+using SlimDX.Direct3D9;
+using CodeImp.DoomBuilder.Config;
+using System.Threading;
+using CodeImp.DoomBuilder.Map;
+using CodeImp.DoomBuilder.Windows;
+using CodeImp.DoomBuilder.ZDoom;
 
 #endregion
 

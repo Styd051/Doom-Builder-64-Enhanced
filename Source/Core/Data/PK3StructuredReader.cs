@@ -16,19 +16,15 @@
 
 #region ================== Namespaces
 
-using CodeImp.DoomBuilder.Data;
-using CodeImp.DoomBuilder.IO;
-using SlimDX.Direct3D9;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
-using System.Text;
-using static System.Net.Mime.MediaTypeNames;
+using CodeImp.DoomBuilder.IO;
 
 #endregion
 
