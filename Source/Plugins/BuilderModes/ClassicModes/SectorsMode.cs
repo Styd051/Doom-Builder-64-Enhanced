@@ -1175,13 +1175,13 @@ namespace CodeImp.DoomBuilder.BuilderModes
             }
         }
 
-        private Lights InterpolateLight(Lights start, Lights end, int delta)
+        private Lights InterpolateLight(Lights start, Lights end, float delta)
         {
             int r, g, b;
 
-            r = start.color.r + (delta * (end.color.r - start.color.r)) / 256;
-            g = start.color.g + (delta * (end.color.g - start.color.g)) / 256;
-            b = start.color.b + (delta * (end.color.b - start.color.b)) / 256;
+            r = (int)(start.color.r + (delta * (end.color.r - start.color.r)) / 256.0);
+            g = (int)(start.color.g + (delta * (end.color.g - start.color.g)) / 256.0);
+            b = (int)(start.color.b + (delta * (end.color.b - start.color.b)) / 256.0);
 
             return new Lights((byte)r, (byte)g, (byte)b, 0);
         }
@@ -1201,8 +1201,8 @@ namespace CodeImp.DoomBuilder.BuilderModes
             {
                 Lights startlight;
                 Lights endlight;
-                int delta = (256 / (orderedselection.Count - 1));
-                int index;
+                float delta = (float)(256.0 / ((float)orderedselection.Count - 1.0));
+                float index;
 
                 // FLOOR
                 startlight = (Lights)General.GetByIndex(orderedselection, 0).FloorColor;
