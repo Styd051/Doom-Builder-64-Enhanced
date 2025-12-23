@@ -318,9 +318,8 @@ namespace CodeImp.DoomBuilder.Data
             texcount = LoadTextures(texturesonly);
             flatcount = LoadFlats(flatsonly);
             colormapcount = LoadColormaps(colormapsonly);
-            LoadSprites();
             thingcount = LoadDecorateThings();
-            spritecount = LoadThingSprites();
+            spritecount = LoadSprites();
             LoadInternalSprites();
 
             foreach (TextureIndexInfo tp in General.Map.Config.ThingPalettes)
@@ -1015,70 +1014,32 @@ namespace CodeImp.DoomBuilder.Data
 
         #region ================== Sprites
 
-        // This loads the hard defined sprites (not all the lumps, we do that on a need-to-know basis, see LoadThingSprites)
+        // This loads the sprites
         private int LoadSprites()
-        {
-            ICollection < ImageData > images;
-            int counter = 0;
-            
-            // Load all defined sprites. Note that we do not use all sprites,
-            // so we don't add them for previews just yet.
-            foreach (DataReader dr in containers)
-            {
-                // Load sprites
-                images = dr.LoadSprites();
-                if (images != null)
-                {
-                    // Add or replace in sprites list
-                    foreach (ImageData img in images)
-                    {
-                        sprites[img.LongName] = img;
-                        counter++;
-                    }
-                }
-            }
-            
-            // Output info
-            return counter;
-        }
-		
-		// This loads the sprites that we really need for things
-		private int LoadThingSprites()
         {
             // Go for all things
             foreach (ThingTypeInfo ti in General.Map.Data.ThingTypes)
             {
-                // Valid sprite name?
-                if ((ti.Sprite.Length > 0) && (ti.Sprite.Length <= 8))
+                // Sprite not added to collection yet?
+                if (!sprites.ContainsKey(ti.SpriteLongName) && (ti.Sprite.Length <= 8))
                 {
-                    ImageData image = null;
-                    
-                    // Sprite not in our collection yet?
-                    if (!sprites.ContainsKey(ti.SpriteLongName))
+                    // Find sprite data
+                    Stream spritedata = GetSpriteData(ti.Sprite);
+                    if (spritedata != null)
                     {
-                        // Find sprite data
-                        Stream spritedata = GetSpriteData(ti.Sprite);
-                        if (spritedata != null)
-                        {
-                            // Make new sprite image
-                            image = new SpriteImage(ti.Sprite);
-                            
-                            // Add to collection
-                            sprites.Add(ti.SpriteLongName, image);
-                        }
-                    }
-                    else
-                    {
-                        image = sprites[ti.SpriteLongName];
-                    }
-                    
-                    // Add to preview manager
-                    if (image != null)
+                        // Make new sprite image
+                        SpriteImage image = new SpriteImage(ti.Sprite);
+
+                        // Add to collection
+                        sprites.Add(ti.SpriteLongName, image);
+
+                        // Add to preview manager
                         previews.AddImage(image);
 
-                    // villsa
-                    if (ti.PalIndex > 0)
-                        image.PalIndex = ti.PalIndex;
+                        // villsa
+                        if (ti.PalIndex > 0)
+                            image.PalIndex = ti.PalIndex;
+                    }
                 }
             }
 
@@ -1109,10 +1070,6 @@ namespace CodeImp.DoomBuilder.Data
         {
             if (!string.IsNullOrEmpty(pname))
             {
-                long longname = Lump.MakeLongName(pname);
-                if (sprites.ContainsKey(longname))
-                         return true;
-
                 // Go for all opened containers
                 for (int i = containers.Count - 1; i >= 0; i--)
                 {
@@ -1216,6 +1173,27 @@ namespace CodeImp.DoomBuilder.Data
                 }
             }
         }
+
+        // BAD! These block while loading the image. That is not
+        // what our background loading system is for!
+        /*
+		// This returns a bitmap by string
+		public Bitmap GetSpriteBitmap(string name)
+		{
+			ImageData img = GetSpriteImage(name);
+			img.LoadImage();
+			return img.Bitmap;
+		}
+
+		// This returns a texture by string
+		public Texture GetSpriteTexture(string name)
+		{
+			ImageData img = GetSpriteImage(name);
+			img.LoadImage();
+			img.CreateTexture();
+			return img.Texture;
+		}
+		*/
 
         #endregion
 
