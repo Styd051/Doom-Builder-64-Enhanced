@@ -119,7 +119,13 @@ namespace CodeImp.DoomBuilder.BuilderModes
                     // styd: Adds a feature when you place a nightmare flag on things it automatically changes color to green
                     if (Thing.IsFlagSet("4096"))//Nightmare Flag
                     {
-                        sectorcolor = new PixelColor(128, 64, 255, 0).ToInt();
+                        sectorcolor = new PixelColor(255, 64, 255, 0).ToInt();
+                    }
+
+                    // styd: Adds a feature when you place the Spawned by Special flag on an thing the color of its sprite turns black
+                    if (Thing.IsFlagSet("32"))//Spawned by Special Flag
+                    {
+                        sectorcolor = new PixelColor(255, 0, 0, 0).ToInt();
                     }
                 }
 
@@ -238,7 +244,15 @@ namespace CodeImp.DoomBuilder.BuilderModes
             // Apply settings
             SetPosition(pos);
             SetCageSize(info.Radius, info.Height);
-            SetCageColor(Thing.Color);
+            // styd: Adds a feature when you place the Nightmare flag on a thing the color of its cage now changes to green
+            if (Thing.IsFlagSet("4096"))//Nightmare Flag
+            {
+                SetCageColor(new PixelColor(255, 64, 255, 0));
+            }
+            else
+            {
+                SetCageColor(Thing.Color);
+            }
 
             // Keep info for object picking
             cageradius2 = info.Radius * Angle2D.SQRT2;
