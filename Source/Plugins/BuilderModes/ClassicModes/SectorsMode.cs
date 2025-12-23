@@ -1179,9 +1179,9 @@ namespace CodeImp.DoomBuilder.BuilderModes
         {
             int r, g, b;
 
-            r = (int)(start.color.r + (delta * (end.color.r - start.color.r)) / 256.0);
-            g = (int)(start.color.g + (delta * (end.color.g - start.color.g)) / 256.0);
-            b = (int)(start.color.b + (delta * (end.color.b - start.color.b)) / 256.0);
+            r = (int)Math.Round(start.color.r + (delta * (end.color.r - start.color.r)) / 256.0);
+            g = (int)Math.Round(start.color.g + (delta * (end.color.g - start.color.g)) / 256.0);
+            b = (int)Math.Round(start.color.b + (delta * (end.color.b - start.color.b)) / 256.0);
 
             return new Lights((byte)r, (byte)g, (byte)b, 0);
         }
