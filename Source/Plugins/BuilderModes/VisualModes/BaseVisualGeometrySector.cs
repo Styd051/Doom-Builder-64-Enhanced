@@ -283,6 +283,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                     s.CeilColor = l[0];
                     s.FloorColor = l[1];
                     s.ThingColor = l[2];
+					s.UpdateNeeded = true;
                     //s.TopColor = l[3];
                     //s.LowerColor = l[4];
                 }
