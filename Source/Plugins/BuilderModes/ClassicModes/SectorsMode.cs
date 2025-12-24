@@ -1250,6 +1250,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 {
                     s.TopColor = InterpolateLight(startlight, endlight, index);
                     index += delta;
+					s.UpdateNeeded = true;
                 }
 
                 // BOTTOM
