@@ -205,6 +205,8 @@ namespace CodeImp.DoomBuilder.Rendering
         // This draws the image on screen
         public void Present()
         {
+            General.Plugins.OnPresentDisplayBegin();
+
             // Start drawing
             if (graphics.StartRendering(true, General.Colors.Background.ToColorValue(), graphics.BackBuffer, graphics.DepthBuffer))
             {

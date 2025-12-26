@@ -90,6 +90,9 @@ namespace CodeImp.DoomBuilder.VisualModes
         public bool ProcessThings { get { return processthings; } set { processthings = value; } }
         public VisualBlockMap BlockMap { get { return blockmap; } }
 
+        // Rendering
+		public IRenderer3D Renderer { get { return renderer; } }
+
         #endregion
 
         #region ================== Constructor / Disposer

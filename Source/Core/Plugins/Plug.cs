@@ -329,6 +329,7 @@ namespace CodeImp.DoomBuilder.Plugins
 		// Rendering events
 		public virtual void OnEditRedrawDisplayBegin() { }
 		public virtual void OnEditRedrawDisplayEnd() { }
+        public virtual void OnPresentDisplayBegin() { }
 
         #endregion
     }
