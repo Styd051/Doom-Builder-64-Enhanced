@@ -8,6 +8,15 @@ Doom Builder 64 Enhanced is a fork of Doom Builder 64, Its main objective is to 
 * **DOOM 64 EX+ Enhanced**
 * **DOOM 64 N64**
 
+# The Plugins That Are Supported
+
+* Comments Panel
+* Copy Paste Sector Props
+* Stair Sector Builder
+* Statistics
+* Tag Range
+* Reject Editor (Currently, there's a problem when you make your first save on a new map that doesn't yet contain its own WAD file, This causes the Reject Editor plugin to crash the editor, because during the first save on a new map, the editor creates its own WAD file, This is because the Reject Editor plugin looks for the REJECT lump in the map's WAD file, However, when you load a map that already has its own WAD file into the editor and save, the Reject Editor plugin won't crash the editor, it will function correctly.)
+
 # Priority Things to Do First for Doom Builder 64 Enhanced
 
 * Update the Doom Builder 64 source code to the latest version of the original Doom Builder 2 source code(Currently, the source code for Doom Builder 64 Enhanced is not yet updated to the latest version of the original Doom Builder 2 source code, I'm working on it gradually, updating the source code over time.)
@@ -31,6 +40,8 @@ If you have any problems or suggestions, use the Issues or Pull Requests pages i
 ## Credits
 
 * **Codeimp:** for creating Doom Builder 2.
+* **Boris_i:** for contributing to Doom Builder 2.
+* **MaxED:** for creating GZDoom Builder and for adding new features to the editor.
 * **Kaiser:** for creating Doom Builder 64.
 * **Kovic:** for having done some things and made some improvements to Doom Builder 64.
 * **Diema:** for having created the nodebuilder dma-bsp64, which is a fork of D64BSP.
