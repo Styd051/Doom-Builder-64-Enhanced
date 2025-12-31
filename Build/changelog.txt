@@ -1,6 +1,80 @@
 Doom Builder 64 Enhanced
-based on code by CodeImp, boris_i, Kaiser
+based on code by CodeImp, boris_i, Kaiser, MaxED
 =======================================================
+version 1.0.0.1
+=====================
+- Added the latest version of the Comments Panel plugin by codeimp
+- Exposed more DECORATE information to plugins and Things now have an Actor property (ActorStructure) when they are loaded from DECORATE Polished the browse icons and browse buttons.
+Added more events for plugins to intercept. by codeimp
+- Slightly improved DECORATE parsing (now also works with skip_super and allows // within quoted strings) by codeimp
+- @ Added a very useful function in the map element fields. Why didn't I add this long ago?! by codeimp
+- Fixed bug that caused translucent objects to become opaque when full brightness is turned on in Visual Mode by codeimp
+- Fixed memory and performance issues in Visual Mode for things with 0 with or height. (note to developers: VisualMode::GetVisualThing(t) may return null) by codeimp
+- Fixed thing angles so that any value in the −32768..32767 range can be entered. Also fixed the thing angle in the info panel accordingly and optimized the rendering slightly. by codeimp
+- Fixed bug that prevent TAB from being detected in Preferences Controls input. by codeimp
+- Added Find & Replace for Thing Angles 
+Added lots of new filter options for Things Filters
+Some interface polishing by codeimp
+- Fixed a bug with pasted things when the Things Filter is used.
+Fixed a bug with the Things Filter which caused some things to be incorrectly shown. by codeimp
+- Added support for 'walltexture' and 'flat' types in the TEXTURES lump by codeimp
+- Updated SlimDX library to latest version (January 2012) by codeimp
+- Added the latest version of the Tag Range plugin source code, created by CodeImp on Doom Builder 64 Enhanced.
+- finally got my plane math right, thanks MathWorld & Paul Bourk by codeimp
+- Fixed things in Visual Mode not being updated after their type is changed. by codeimp
+- Exposed GetLumpData and SetLumpData for plugins to read/write map lumps
+@ some game config documentation I still have laying around here by codeimp
+- Features for plugins to export the current map data, get info about the loaded resources and create in-memory images for display. by codeimp
+- Added plugin event OnMapNodesRebuilt which allows plugins to read/modify nodebuilder output.
+Added RebuildNodes method in MapManager which allows plugins to rebuild the nodes on demand. and Added Reject Editor plugin by codeimp
+- Added -nosettings command line parameter which allows starting Doom Builder with only the default settings (no user settings) but any settings you make will not be saved (to protect your original settings). by codeimp
+- Added -strictpatches command line parameter to indicate strict patches loading for the WAD file loaded from command line
+Added -resource command line parameter to specify additional resources for the WAD file loaded from command line see cmdargs.txt for more information! by codeimp
+- Added some functionality for plugins that want to render in other editing modes by codeimp
+- @ Added the DynamicBitmapImage which is much more efficient when updated dynamically (use UpdateTexture after modifying the pixels) by codeimp
+- Added the ability for plugins to choose the toolbar section in which to add a button by codeimp
+- Fixed a visual glitch which caused incorrect thing colors when selection was cleared from Edit Selection mode. by codeimp
+- Added some minor fixes made by codeimp while working on the gzdoomediting plugin
+- Fixed some inaccuracy problems with the Edit Selection mode. by codeimp
+- Added the ability for plugins to add menu items in existing menus by codeimp
+- Things are now flipped when the selection in Edit Selection mode is flipped. by codeimp
+- Fixed a bug where double-clicking the header in the UDMF custom properties tab would result in a crash by boris
+- Added Event Lines functionality, implemented by m-x-d for gzdoombuilder, Currently, the Event Lines code is based on the first version of commit [r1620] on SourceForge, This code may be improved in future, and I will try to import any additional bug fixes that were made by m-x-d for Event Lines later.
+- Adds a new menu called Switch Setup to the Preferences menu and adds a new option that allows you to disable and enable the selection of multiple linedefs for Switch Setup. by Styd051
+- added  When you hover your mouse cursor over the things, it shows you the linedefs they are connected to, linked to their corresponding tag numbers. by Styd051
+- Fixes a bug where, when you place the mouse cursor over the linedef and then remove the mouse cursor from the linedef, the things marked with the corresponding tags remained bright. by Styd051
+- Removed the limit on the number of Things in Doom64 formats, because the file format doesn't really impose a limit on this. by Styd051
+- Adds a feature when you place the Nightmare flag on a thing the color of its cage now changes to green, Adds a feature when you place the Spawned by Special flag on an thing the color of its sprite turns black, Alpha of PixelColor for the Nightmare flag and set to 255 because the editor does not currently support transparency in visual mode. by Styd051
+- Multiple line switch setup
+This allows switch setup to be edited across multiple lines. The only oddity is that users can select multiple flags when multiple lines are selected. This is required at the moment to show multiple line differences. Perhaps an onclick of sorts could remedy this in a future update. by Immorpher
+- Allow Negative Tags
+Doom 64 allows for negative tags, which lets macros to use negative values. So instead of storing tags as ushorts, it stores them as shorts.
+The arrow incrementor and tagged highlighting will need to be updated to support negative tags eventually. by Immorpher
+- Ignore Global Palette Warning for Doom 64
+Doom 64 does not have a global palette, so there should be no warning if it is missing one. by Immorpher
+- Add Final Missing Light Actions
+These are the final (vanilla) light actions that were not defined yet as linedef specials. by Immorpher
+- Fix Multiple Line Switch Checking
+This fixes the issue where mappers could check multiple switch flags when selecting multiple lines. The indeterminate state can still be a bit unusual when middle flags are set. by Immorpher
+- Allow Negative Tag Highlighting
+This finishes the negative tag support for Doom 64! by Immorpher
+- Include Event Line Color in Default Configuration by Immorpher
+- Fix Make Sector Color Gradient Rounding Bug
+When using the "Make Sector Color Gradient" routine, the last sector's color could be altered due to a rounding error because of integer division. Switching some variables to float fixed this bug. by Immorpher
+- Improve Sector Color Gradient Again
+This further improves some rounding errors due to summation which affects the final light. by Immorpher
+- Show Sector Color Gradient Changes Immediately
+In 2D mode sector color gradients would not be updated unless the view was refreshed. This fixes that so it updates immediately after the tool is used. by Immorpher
+- Show Visual Mode Light Changes in 2D Mode
+This allows any copy and pasting of lights in visual mode to be immediately reflected in 2D mode. by Immorpher
+- Add DIM-BSP64 Support
+DIM-BSP64 is a new node builder with extra features and bug fixes: https://github.com/Immorpher/dim-bsp64 by Immorpher
+- Rename the nodebuilder dim-bsp64 to bsp64enhanced, and update the source code to the latest version of the nodebuilder glbsp source code,  and of new functionality added by immorpher.
+- BSP64 Enhanced Updates
+Clean up the BSP64 Enhanced implementation. This replaces both DIM-BSP64 and DMA-BSP64. by Immorpher
+- BSP64 Enhanced Update
+This will prevent some enemies from getting stuck in shallow pits in compress edges mode. by Immorpher
+
 version 1.0.0.0
 =====================
 - Fixed a potential timing issue on speed-stepping CPUs. by codeimp
@@ -23,6 +97,7 @@ Removed code that crashed the script editor and I had no better solution (it was
 - Fixed an issue that caused a map to be 'changed' just by going into Visual Mode. by codeimp
 - @ Removed some console output code that was used for testing
 @ Gave the ThingTypeInfo a string representation (ToString) by codeimp
+- Fixed things in Visual Mode not being updated after their type is changed. by codeimp
 - Find and Replace Mode: can now find things by their flags by boris_i
 - Find and Replace Mode: can now find linedefs by their flags by boris_i
 - Reorganize the order of the lindefs flags on the interface for the Doom 64 vanilla and EX+ configurations, and add the flag Block Player to the EX+ configuration since the EX+ engine supports this new feature. by Styd051
