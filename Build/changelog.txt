@@ -74,6 +74,8 @@ DIM-BSP64 is a new node builder with extra features and bug fixes: https://githu
 Clean up the BSP64 Enhanced implementation. This replaces both DIM-BSP64 and DMA-BSP64. by Immorpher
 - BSP64 Enhanced Update
 This will prevent some enemies from getting stuck in shallow pits in compress edges mode. by Immorpher
+- Update BSP64Enhanced
+Fixed an issue where copying switch properties and textures across lines can cause a multiple activation bug in sidedef compression. by immorpher
 
 version 1.0.0.0
 =====================
