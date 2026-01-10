@@ -1526,6 +1526,16 @@ namespace CodeImp.DoomBuilder.Windows
             }
         }
 
+        //gzdb cross compat
+        public void BeginToolbarUpdate()
+        {
+        }
+
+        //gzdb crosscompat
+        public void EndToolbarUpdate()
+        {
+        }
+
         // This adds a button to the toolbar
         public void AddButton(ToolStripItem button) { AddButton(button, ToolbarSection.Custom, General.Plugins.FindPluginByAssembly(Assembly.GetCallingAssembly())); }
 		public void AddButton(ToolStripItem button, ToolbarSection section) { AddButton(button, section, General.Plugins.FindPluginByAssembly(Assembly.GetCallingAssembly())); }

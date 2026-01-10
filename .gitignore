@@ -7,6 +7,7 @@ Source/Plugins/ImageDrawingExample/obj
 Source/Plugins/CommentsPanel/obj
 Source/Plugins/TagRange/obj
 Source/Plugins/RejectEditor/obj
+Source/Plugins/AutomapMode/obj
 *.zip
 Build/*.exe
 Build/*.pdb

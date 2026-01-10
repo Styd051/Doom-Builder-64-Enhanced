@@ -81,6 +81,7 @@
     <Compile Include="Config\IFilledTextureSet.cs" />
     <Compile Include="Config\MatchingTextureSet.cs" />
     <Compile Include="Config\ResourceTextureSet.cs" />
+	<Compile Include="Config\SectorEffectData.cs" />
     <Compile Include="Config\SectorEffectInfo.cs" />
     <Compile Include="Config\GeneralizedBit.cs" />
     <Compile Include="Config\GeneralizedOption.cs" />

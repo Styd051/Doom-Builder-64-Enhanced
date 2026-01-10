@@ -82,6 +82,14 @@ namespace CodeImp.DoomBuilder.Map
 			{
 				return defaultvalue;
 			}
-       }
+        }
+
+        // gzdb cross compat
+        public static int GetInteger(UniFields fields, string key) { return GetInteger(fields, key, 0); }
+        public static int GetInteger(UniFields fields, string key, int defaultvalue)
+        {
+            if (fields == null) return defaultvalue;
+            return fields.GetValue(key, defaultvalue);
+        }
     }
 }

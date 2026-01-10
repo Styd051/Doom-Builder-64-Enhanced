@@ -164,6 +164,15 @@ namespace CodeImp.DoomBuilder.Config
         public bool SwitchSetupSelectMultipleLinedefs { get { return switchsetupselectmultiplelinedefs; } internal set { switchsetupselectmultiplelinedefs = value; } } // styd
         public bool GZShowEventLines { get { return gzShowEventLines; } internal set { gzShowEventLines = value; } }
 
+        //ano - gzdb cross compat
+        public bool UseHighlight
+        {
+            get { return false; }
+            set
+            {
+            }
+        }
+
         public string DefaultTexture { get { return defaulttexture; } set { defaulttexture = value; } }
         public string DefaultFloorTexture { get { return defaultfloortexture; } set { defaultfloortexture = value; } }
         public string DefaultCeilingTexture { get { return defaultceiltexture; } set { defaultceiltexture = value; } }

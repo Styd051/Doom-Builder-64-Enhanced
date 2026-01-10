@@ -131,6 +131,93 @@ namespace CodeImp.DoomBuilder.Data
         internal ICollection<ResourceTextureSet> ResourceTextureSets { get { return resourcetextures; } }
         internal AllTextureSet AllTextureSet { get { return alltextures; } }
 
+        // ano - gzdb cross compat
+        public Dictionary<string, KeyValuePair<int, int>> Reverbs
+        {
+            get
+            {
+                Dictionary<string, KeyValuePair<int, int>> output = new Dictionary<string, KeyValuePair<int, int>>(255);
+                for (int i = 0; i <= 25; i++)
+                {
+                    output.Add(i + " 0", new KeyValuePair<int, int>(i, 0));
+                }
+
+                for (int i = 30; i <= 45; i++)
+                {
+                    for (int j = 0; i <= 8; i++)
+                    {
+                        output.Add(i + " " + j, new KeyValuePair<int, int>(i, j));
+                    }
+                }
+                output.Add("255 255 water", new KeyValuePair<int, int>(255, 255));
+                return output;
+            }
+        }
+
+        // gzdb cross compat
+        private static Dictionary<int, Rendering.PixelColor> lockcolors;
+        public Dictionary<int, Rendering.PixelColor> LockColors
+        {
+            get
+            {
+                if (lockcolors == null)
+                {
+                    lockcolors = new Dictionary<int, Rendering.PixelColor>();
+                    lockcolors.Add(1, new Rendering.PixelColor(255, 255, 0, 0));
+                    lockcolors.Add(2, new Rendering.PixelColor(255, 0, 0, 255));
+                    lockcolors.Add(3, new Rendering.PixelColor(255, 255, 255, 0));
+                    lockcolors.Add(4, new Rendering.PixelColor(255, 255, 0, 0));
+                    lockcolors.Add(5, new Rendering.PixelColor(255, 0, 0, 255));
+                    lockcolors.Add(6, new Rendering.PixelColor(255, 255, 255, 0));
+                    lockcolors.Add(7, new Rendering.PixelColor(255, 154, 152, 188));
+                    lockcolors.Add(8, new Rendering.PixelColor(255, 156, 76, 0));
+                    lockcolors.Add(9, new Rendering.PixelColor(255, 255, 218, 0));
+                    lockcolors.Add(10, new Rendering.PixelColor(255, 64, 255, 64));
+                    lockcolors.Add(11, new Rendering.PixelColor(255, 255, 64, 64));
+                    for (int i = 12; i < 28; i++)
+                    {
+                        lockcolors.Add(i, new Rendering.PixelColor(255, 150, 150, 150));
+                    }
+                    lockcolors.Add(50, new Rendering.PixelColor(255, 150, 150, 150));
+                    lockcolors.Add(51, new Rendering.PixelColor(255, 150, 150, 150));
+                    lockcolors.Add(100, new Rendering.PixelColor(255, 128, 128, 255));
+                    lockcolors.Add(129, new Rendering.PixelColor(255, 255, 0, 0));
+                    lockcolors.Add(130, new Rendering.PixelColor(255, 0, 0, 255));
+                    lockcolors.Add(131, new Rendering.PixelColor(255, 255, 255, 0));
+                    lockcolors.Add(132, new Rendering.PixelColor(255, 255, 0, 0));
+                    lockcolors.Add(133, new Rendering.PixelColor(255, 0, 0, 255));
+                    lockcolors.Add(134, new Rendering.PixelColor(255, 255, 255, 0));
+                    lockcolors.Add(228, new Rendering.PixelColor(255, 128, 128, 255));
+                }
+                return lockcolors;
+            }
+        }
+        // gzdb cross compat
+        // some mxd code here
+        private static Dictionary<int, int> lockableactions; // <Action number, arg referenceing "keys" enum number>
+        public Dictionary<int, int> LockableActions
+        {
+            get
+            {
+                if (lockableactions == null)
+                {
+                    lockableactions = new Dictionary<int, int>();
+                    foreach (LinedefActionInfo info in General.Map.Config.LinedefActions.Values)
+                    {
+                        for (int i = 0; i < info.Args.Length; i++)
+                        {
+                            if (info.Args[i].Enum != null && info.Args[i].Enum.Name == "keys")
+                            {
+                                info.Args[i].Enum = General.Map.Config.Enums["keys"];
+                                lockableactions[info.Index] = i;
+                            }
+                        }
+                    }
+                }
+                return lockableactions;
+            }
+        }
+
         public bool IsLoading
         {
             get

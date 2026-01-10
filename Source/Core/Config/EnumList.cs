@@ -38,11 +38,11 @@ namespace CodeImp.DoomBuilder.Config
         #endregion
 
         #region ================== Variables
-
+        private readonly string name; //mxd
         #endregion
 
         #region ================== Properties
-
+        public string Name { get { return name; } } //mxd
         #endregion
 
         #region ================== Constructor

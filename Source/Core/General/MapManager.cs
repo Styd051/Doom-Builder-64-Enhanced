@@ -127,6 +127,11 @@ namespace CodeImp.DoomBuilder
         public VisualCamera VisualCamera { get { return visualcamera; } set { visualcamera = value; } }
         public bool IsScriptsWindowOpen { get { return (scriptwindow != null) && !scriptwindow.IsDisposed; } }
 
+        // ano - gzdb plugin interop
+        public bool UDMF { get { return config.UDMF; } }
+        public bool HEXEN { get { return config.HEXEN; } }
+        public bool DOOM { get { return config.DOOM; } }
+
         #endregion
 
         #region ================== Constructor / Disposer

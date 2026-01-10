@@ -246,6 +246,11 @@ namespace CodeImp.DoomBuilder.Config
         internal List<DefinedTextureSet> TextureSets { get { return texturesets; } }
         public List<ThingsFilter> ThingsFilters { get { return thingfilters; } }
 
+        // gzdb plugin interop
+        public bool UDMF { get { return formatinterface == "UniversalMapSetIO"; } }
+        public bool HEXEN { get { return formatinterface == "HexenMapSetIO"; } }
+        public bool DOOM { get { return formatinterface == "DoomMapSetIO"; } }
+
         #endregion
 
         #region ================== Constructor / Disposer
@@ -969,6 +974,38 @@ namespace CodeImp.DoomBuilder.Config
 
             // Not generalized
             return null;
+        }
+
+        // gzdb cross compat
+        //mxd
+        public SectorEffectData GetSectorEffectData(int effect) { return GetSectorEffectData(effect, General.Map.Config.GenEffectOptions); }
+        public SectorEffectData GetSectorEffectData(int effect, List<GeneralizedOption> options)
+        {
+            SectorEffectData result = new SectorEffectData();
+            if (effect > 0)
+            {
+                int cureffect = effect;
+
+                if (General.Map.Config.GeneralizedEffects)
+                {
+                    for (int i = options.Count - 1; i > -1; i--)
+                    {
+                        for (int j = options[i].Bits.Count - 1; j > -1; j--)
+                        {
+                            GeneralizedBit bit = options[i].Bits[j];
+                            if (bit.Index > 0 && (cureffect & bit.Index) == bit.Index)
+                            {
+                                cureffect -= bit.Index;
+                                result.GeneralizedBits.Add(bit.Index);
+                            }
+                        }
+                    }
+                }
+
+                if (cureffect > 0) result.Effect = cureffect;
+            }
+
+            return result;
         }
 
         // This checks if a specific edit mode class is listed

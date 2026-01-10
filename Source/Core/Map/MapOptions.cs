@@ -85,6 +85,9 @@ namespace CodeImp.DoomBuilder.Map
 
         public string LevelName { get { return currentname; } }
 
+        // ano - GZDB plugin interop
+        public string DefaultWallTexture { get { return General.Settings.DefaultTexture; } set { General.Settings.DefaultTexture = value; } }
+
         #endregion
 
         #region ================== Constructor / Disposer

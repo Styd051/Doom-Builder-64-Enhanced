@@ -184,5 +184,11 @@ namespace CodeImp.DoomBuilder.Windows
         /// This selected the previously selected docker in the side panel.
         /// </summary>
         void SelectPreviousDocker();
+
+        // gzdb cross compat
+        void BeginToolbarUpdate();
+
+        // gzdb cross compat
+        void EndToolbarUpdate();
     }
 }

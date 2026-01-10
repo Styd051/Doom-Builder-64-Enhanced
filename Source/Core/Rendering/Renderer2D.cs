@@ -145,6 +145,8 @@ namespace CodeImp.DoomBuilder.Rendering
         public int VertexSize { get { return vertexsize; } }
         public ViewMode ViewMode { get { return viewmode; } }
         public SurfaceManager Surfaces { get { return surfaces; } }
+        // ano - gzdb plugin cross compat
+        public bool DrawMapCenter { get { return false; } set { } }
         public RectangleF Viewport { get { return viewport; } }
 
         #endregion
@@ -1214,6 +1216,37 @@ namespace CodeImp.DoomBuilder.Rendering
             }
         }
 
+        //mxd
+        // ano - gzdb plug cross compat (?)
+        public void RenderHighlight(FlatVertex[] vertices, int color)
+        {
+            try
+            {
+                if (vertices.Length < 3) return;
+
+                // Set renderstates for rendering
+                graphics.Device.SetRenderState(RenderState.CullMode, Cull.None);
+                graphics.Device.SetRenderState(RenderState.ZEnable, false);
+                graphics.Device.SetRenderState(RenderState.AlphaBlendEnable, false);
+                graphics.Device.SetRenderState(RenderState.AlphaTestEnable, false);
+                graphics.Device.SetRenderState(RenderState.TextureFactor, -1);
+                graphics.Device.SetRenderState(RenderState.FogEnable, false);
+
+                SetWorldTransformation(true);
+                //graphics.Shaders.Things2D.FillColor = new Color4(color);
+                graphics.Shaders.Things2D.SetSettings(1.0f);
+                graphics.Shaders.Things2D.Texture1 = thingtexture[0].Texture;
+                SetWorldTransformation(false);
+                // Draw
+                graphics.Shaders.Things2D.Begin();
+                graphics.Shaders.Things2D.BeginPass(2);
+                graphics.Device.DrawUserPrimitives<FlatVertex>(PrimitiveType.TriangleList, 0, vertices.Length / 3, vertices);
+                graphics.Shaders.Things2D.EndPass();
+                graphics.Shaders.Things2D.End();
+            }
+            catch (Exception) { }
+        }
+
         // This renders text
         public void RenderText(TextLabel text)
         {
@@ -1493,6 +1526,20 @@ namespace CodeImp.DoomBuilder.Rendering
                 PlotVertex(sd.Line.Start, DetermineVertexColor(sd.Line.Start));
                 PlotVertex(sd.Line.End, DetermineVertexColor(sd.Line.End));
             }
+        }
+
+        // mxd
+        public void PlotLine(Vector2D start, Vector2D end, PixelColor c, float lengthscaler)
+        {
+            // Transform coordinates
+            Vector2D v1 = start.GetTransformed(translatex, translatey, scale, -scale);
+            Vector2D v2 = end.GetTransformed(translatex, translatey, scale, -scale);
+
+            //mxd. Should we bother?
+            if ((v2 - v1).GetLengthSq() < linenormalsize * lengthscaler) return;
+
+            // Draw line
+            plotter.DrawLineSolid((int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, ref c);
         }
 
         // This renders a simple line
